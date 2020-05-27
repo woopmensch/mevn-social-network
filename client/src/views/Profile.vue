@@ -71,7 +71,6 @@ export default {
     methods: {
         async fetchUserData() {
             this.user = await UserService.fetchUserById(this.userId);
-            console.log(this.userId)
         },
 
         async fetchPostsByUser() {

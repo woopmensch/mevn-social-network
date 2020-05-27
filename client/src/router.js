@@ -76,7 +76,7 @@ router.beforeEach(async (to, from, next) => {
 				name: "login"
 			});
 		} else {
-			next()
+			next();
 		}
 	} else if (to.meta.guest) {
 		if (store.state.authState) {
@@ -84,10 +84,10 @@ router.beforeEach(async (to, from, next) => {
 				name: 'news'
 			})
 		} else {
-			next()
+			next();
 		}
 	} else {
-		next()
+		next();
 	}
 })
 

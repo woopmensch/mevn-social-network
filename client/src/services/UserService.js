@@ -36,8 +36,6 @@ export default {
             console.log(error)
         }
 
-        console.log(resp.data)
-
-        return resp.data
+        return resp.data;
     }
 }
