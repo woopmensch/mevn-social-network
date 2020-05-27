@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "node ./index.js",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "start": "node ./index.js"
   },
   "author": "Artem Lyamaev",
   "license": "ISC",
@@ -24,8 +23,5 @@
   },
   "devDependencies": {
     "nodemon": "^1.19.4"
-  },
-  "engines": {
-    "node": "v12.16.3"
   }
 }
