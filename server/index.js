@@ -28,7 +28,7 @@ app.use(errorHandler);
 const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 4000;
 
 if (process.env.NODE_ENV === 'production') {
-    app.use(epxress.static('client/dist'));
+    app.use(express.static('client/dist'));
 
     app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
