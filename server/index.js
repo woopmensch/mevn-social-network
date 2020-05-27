@@ -27,7 +27,7 @@ app.use(errorHandler);
 // start server
 const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 4000;
 
-if (process.end.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
     app.use(epxress.static('client/dist'));
 
     app.get('*', (req, res) => {
