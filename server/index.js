@@ -13,7 +13,7 @@ require('./db/db');
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ credentials: true, origin: '/' }));
+app.use(cors({ credentials: true, origin: '' }));
 app.use(morgan('combined'));
 app.use(passport.initialize());
 
