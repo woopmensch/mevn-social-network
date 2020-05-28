@@ -33,7 +33,7 @@ async function create(req, res, next) {
 
         io.emit('newPost', await post.getDetailedInfo());
 
-        res.send(post);
+        res.json(post);
 
     } catch (error) {
         res.send(error);
