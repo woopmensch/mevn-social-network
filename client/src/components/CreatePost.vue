@@ -44,7 +44,6 @@ export default {
 
     sockets: {
         newPost: function(data) {
-            console.log(data);
             this.$emit("newPost", data);
         }
     }
