@@ -88,6 +88,7 @@ export default {
         },
 
         fetchNewPost(data) {
+            console.log(this.posts, data);
             this.posts.unshift(data);
         }
     },
