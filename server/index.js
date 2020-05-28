@@ -16,6 +16,7 @@ const morgan = require('morgan');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const history = require('connect-history-api-fallback');
 const errorHandler = require('./_helpers/error-handler');
 require('./db/db');
 
@@ -24,6 +25,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({ credentials: true, origin: '' }));
 app.use(morgan('combined'));
+app.use(history())
 app.use(passport.initialize());
 
 require('./config/passport');
