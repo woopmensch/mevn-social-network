@@ -88,14 +88,13 @@ export default {
         },
 
         fetchNewPost(data) {
-            console.log(this.posts, data);
             this.posts.unshift(data);
         }
     },
 
     mounted() {
         this.fetchUserData();
-        // this.fetchPostsByUser();
+        this.fetchPostsByUser();
     },
 
     sockets: {
