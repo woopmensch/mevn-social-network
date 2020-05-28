@@ -19,7 +19,7 @@ Vue.prototype.$parsedDate = function (d) {
 }
 
 Vue.use(new VueSocketIO({
-	connection: 'http://localhost:4000',
+	connection: '/',
 	vuex: {
 		store,
 		actionPrefix: 'SOCKET_',
