@@ -22,7 +22,6 @@
                 </div>
                 <div class="uk-margin uk-flex uk-flex-between">
                     <button class="uk-button uk-button-primary" type="submit">Login</button>
-                    <!-- <button class="uk-button uk-button-secondary"></button> -->
                     <router-link
                         to="/register"
                         tag="button"
