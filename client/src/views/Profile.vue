@@ -75,6 +75,7 @@ export default {
 
         async fetchPostsByUser() {
             this.posts = await PostsService.fetchPostsByUser(this.userId);
+            console.log(this.posts)
             this.activeTab = "userPosts";
             this.$refs.likedPosts.classList.remove("uk-active");
             this.$refs.userPosts.classList.add("uk-active");
