@@ -19,7 +19,7 @@ Vue.prototype.$parsedDate = function (d) {
 }
 
 Vue.use(new VueSocketIO({
-	connection: 'https://mevn-social-network.herokuapp.com',
+	// connection: 'http://localhost:4000',
 	vuex: {
 		store,
 		actionPrefix: 'SOCKET_',
