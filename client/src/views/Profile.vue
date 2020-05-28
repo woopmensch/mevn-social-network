@@ -43,7 +43,6 @@ import Post from "../components/Post";
 import UserService from "../services/UserService";
 import PostsService from "../services/PostsService";
 import { mapState } from "vuex";
-import { HTTP } from "../services/api";
 
 export default {
     props: ["userId"],
@@ -75,25 +74,25 @@ export default {
         },
 
         async fetchPostsByUser() {
-            // this.posts = await PostsService.fetchPostsByUser(this.userId);
-            // this.activeTab = "userPosts";
-            // this.$refs.likedPosts.classList.remove("uk-active");
-            // this.$refs.userPosts.classList.add("uk-active");
+            this.posts = await PostsService.fetchPostsByUser(this.userId);
+            this.activeTab = "userPosts";
+            this.$refs.likedPosts.classList.remove("uk-active");
+            this.$refs.userPosts.classList.add("uk-active");
 
-            HTTP({
-                url: "/posts/user/5ecf711fe97644002eadfde3",
-                method: "GET",
-                crossdomain: true
-            })
-                .then(res => {
-                    this.posts = res.data;
-                    this.activeTab = "userPosts";
-                    this.$refs.likedPosts.classList.remove("uk-active");
-                    this.$refs.userPosts.classList.add("uk-active");
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+            // HTTP({
+            //     url: "/posts/user/5ecf711fe97644002eadfde3",
+            //     method: "GET",
+            //     crossdomain: true
+            // })
+            //     .then(res => {
+            //         this.posts = res.data;
+            //         this.activeTab = "userPosts";
+            //         this.$refs.likedPosts.classList.remove("uk-active");
+            //         this.$refs.userPosts.classList.add("uk-active");
+            //     })
+            //     .catch(error => {
+            //         console.log(error);
+            //     });
         },
 
         async fetchLikedPosts() {
