@@ -7,7 +7,7 @@ export default {
     },
     mounted() {
         this.$nextTick(() => {
-            this.$el.setAttribute("style", "height",
+            this.$el.setAttribute("height",
                 `${this.$el.scrollHeight}px`);
         });
     }
