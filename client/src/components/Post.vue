@@ -91,12 +91,12 @@
                     <span class="uk-margin-small-right" uk-icon="user" width="40"></span>
                     <textarea
                         class="uk-textarea"
-                        @input="mixin_autoResize_resize"
                         type="text"
                         v-model="commentText"
                         placeholder="What's up?"
                         style="resize: none; overflow: hidden;"
                     />
+                    <!-- @input="mixin_autoResize_resize" -->
                     <div class="uk-margin-small-top">
                         <button
                             class="uk-button uk-button-small uk-button-primary uk-margin-small-left"
@@ -116,11 +116,11 @@ import PostsService from "../services/PostsService";
 import CommentsService from "../services/CommentsService";
 import Like from "./Like";
 import Comment from "./Comment";
-import mixinAutoResize from "../utils/autoResize.js";
+// import mixinAutoResize from "../utils/autoResize.js";
 
 export default {
     name: "Post",
-    mixins: [mixinAutoResize],
+    // mixins: [mixinAutoResize],
     props: ["post"],
     components: {
         Like,

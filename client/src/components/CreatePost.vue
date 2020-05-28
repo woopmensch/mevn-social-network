@@ -5,12 +5,12 @@
                 <span class="uk-margin-small-right" uk-icon="user" width="40"></span>
                 <textarea
                     class="uk-textarea"
-                    @input="mixin_autoResize_resize"
                     type="text"
                     v-model="postText"
                     placeholder="What's up?"
                     style="resize: none; overflow: hidden"
                 />
+                <!-- @input="mixin_autoResize_resize" -->
             </div>
             <div class="uk-flex uk-flex-right uk-margin-small-top">
                 <button
@@ -25,11 +25,11 @@
 
 <script>
 import PostsService from "../services/PostsService";
-import mixinAutoResize from "../utils/autoResize.js";
+// import mixinAutoResize from "../utils/autoResize.js";
 
 export default {
     name: "createPost",
-    mixins: [mixinAutoResize],
+    // mixins: [mixinAutoResize],
     data: () => {
         return {
             postText: ""
