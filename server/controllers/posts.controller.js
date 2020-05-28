@@ -66,6 +66,7 @@ async function getByUser(req, res, next) {
             await posts[i].getDetailedInfo();
         }
         // console.log(posts)
+        res.setHeader("Content-Type", "application/json")
         res.json(posts);
 
     } catch (error) {

@@ -16,10 +16,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors({ credentials: true, origin: '' }));
 app.use(morgan('combined'));
 app.use(passport.initialize());
-app.use(function (req, res, next) {
-    res.setHeader("Content-Type", "application/json")
-    next();
-});
 
 require('./config/passport');
 
