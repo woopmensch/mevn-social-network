@@ -2,7 +2,11 @@
     <div id="app">
         <div v-if="!isMobile" class="uk-container uk-flex uk-flex-center">
             <div class="uk-margin-remove" style="width: 60vw;" uk-grid>
-                <div v-if="isLoggedIn" class="uk-flex uk-flex-middle" style="width: 200px;">
+                <div
+                    v-if="isLoggedIn"
+                    class="uk-flex uk-flex-middle"
+                    style="width: 200px; height: 100vh;"
+                >
                     <Navbar class="uk-position-fixed"></Navbar>
                 </div>
                 <router-view class="uk-width-expand uk-animation-fade"></router-view>
