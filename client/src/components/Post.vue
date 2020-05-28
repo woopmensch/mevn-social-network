@@ -93,7 +93,7 @@
                         class="uk-textarea"
                         type="text"
                         v-model="commentText"
-                        placeholder="What's up?"
+                        placeholder="Leave a comment..."
                         style="resize: none; overflow: hidden;"
                     />
                     <!-- @input="mixin_autoResize_resize" -->

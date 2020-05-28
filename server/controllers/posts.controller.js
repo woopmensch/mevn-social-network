@@ -1,6 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const Post = require('../models/post.model');
+const Comment = require('../models/comment.model');
 const router = express.Router();
 const io = require('../socketio');
 const auth = {};
@@ -98,6 +99,8 @@ async function _delete(req, res, next) {
         }
 
         await Post.findByIdAndDelete(postId);
+
+        await Comment.deleteMany({ "target.id": postId });
 
         io.emit("deletePost", postId)
 

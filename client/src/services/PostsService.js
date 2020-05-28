@@ -29,7 +29,7 @@ export default {
         } catch (error) {
             console.log(error)
         }
-        console.log(resp)
+
         return resp.data;
     },
 
