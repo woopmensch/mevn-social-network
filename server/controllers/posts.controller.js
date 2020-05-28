@@ -65,8 +65,8 @@ async function getByUser(req, res, next) {
         for (let i = 0; i < posts.length; i++) {
             await posts[i].getDetailedInfo();
         }
-        console.log(posts)
-        res.send(posts);
+        // console.log(posts)
+        res.json(posts);
 
     } catch (error) {
         res.send(error);
