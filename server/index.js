@@ -33,7 +33,7 @@ if (process.env.NODE_ENV === 'production') {
     app.get('*', (req, res) => {
         res.sendFile(path.resolve(__dirname, '../client', 'dist', 'index.html'));
     })
-}s
+}
 
 http.listen(port, function () {
     console.log(`Server listening on port ${port}`);
