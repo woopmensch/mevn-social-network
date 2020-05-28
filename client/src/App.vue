@@ -68,7 +68,7 @@ body {
     height: 100%;
 }
 #app {
-    height: auto;
+    height: 100%;
     width: 100%;
     overflow-y: scroll;
 }
