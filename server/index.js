@@ -2,6 +2,15 @@ const express = require('express');
 const app = express();
 const http = require('http').Server(app);
 module.exports = http;
+
+const httpProxy = require('http-proxy');
+httpProxy.createProxyServer({
+    target: '/',
+    toProxy: true,
+    changeOrigin: true,
+    xfwd: true
+});
+
 const cors = require('cors');
 const morgan = require('morgan');
 const passport = require('passport');
