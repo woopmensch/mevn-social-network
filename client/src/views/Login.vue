@@ -50,8 +50,8 @@ export default {
     },
     data: () => {
         return {
-            email: "22liamaev@gmail.com",
-            password: "ArtemMega",
+            email: "",
+            password: "",
             errors: []
         };
     },
