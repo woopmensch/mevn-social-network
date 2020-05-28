@@ -95,7 +95,7 @@ export default {
 
     mounted() {
         this.fetchUserData();
-        this.fetchPostsByUser();
+        // this.fetchPostsByUser();
     },
 
     sockets: {
