@@ -14,7 +14,7 @@
                         <span class="uk-form-icon" uk-icon="icon: lock"></span>
                         <input
                             class="uk-input"
-                            type="text"
+                            type="password"
                             v-model="password"
                             placeholder="Password"
                         />
@@ -24,8 +24,8 @@
                     <div class="uk-inline">
                         <span class="uk-form-icon" uk-icon="icon: lock"></span>
                         <input
-                            class="uk-input"
-                            type="text"
+                            class="uk-input uk-form-password"
+                            type="password"
                             v-model="confirmPassword"
                             placeholder="Confirm password"
                         />
