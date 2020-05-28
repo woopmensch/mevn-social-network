@@ -13,7 +13,7 @@ require('./db/db');
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ credentials: true, origin: 'http://localhost:8080' }));
+app.use(cors({ credentials: true, origin: '/' }));
 app.use(morgan('combined'));
 app.use(passport.initialize());
 
@@ -25,7 +25,7 @@ const api = require('./api');
 app.use(errorHandler);
 
 // start server
-const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 4000;
+const port = process.env.PORT || 4000;
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.resolve(__dirname, '../client', 'dist')));
