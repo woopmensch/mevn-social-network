@@ -101,7 +101,7 @@ async function _delete(req, res, next) {
         await Post.findByIdAndDelete(postId);
 
         //also delete post comments
-        await Comment.delete({ "target.id": postId });
+        await Comment.deleteMany({ "target.id": postId });
 
         io.emit("deletePost", postId)
 
