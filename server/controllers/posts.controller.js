@@ -31,7 +31,7 @@ async function create(req, res, next) {
 
         await post.save();
 
-        io.emit('newPost', await post.getDetailedInfo());
+        io.emit('newPost', JSON.stringify(await post.getDetailedInfo()));
 
         res.json(post);
 

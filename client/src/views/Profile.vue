@@ -78,21 +78,6 @@ export default {
             this.activeTab = "userPosts";
             this.$refs.likedPosts.classList.remove("uk-active");
             this.$refs.userPosts.classList.add("uk-active");
-
-            // HTTP({
-            //     url: "/posts/user/5ecf711fe97644002eadfde3",
-            //     method: "GET",
-            //     crossdomain: true
-            // })
-            //     .then(res => {
-            //         this.posts = res.data;
-            //         this.activeTab = "userPosts";
-            //         this.$refs.likedPosts.classList.remove("uk-active");
-            //         this.$refs.userPosts.classList.add("uk-active");
-            //     })
-            //     .catch(error => {
-            //         console.log(error);
-            //     });
         },
 
         async fetchLikedPosts() {

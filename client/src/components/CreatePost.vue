@@ -25,7 +25,6 @@
 
 <script>
 import PostsService from "../services/PostsService";
-import { HTTP } from "../services/api";
 // import mixinAutoResize from "../utils/autoResize.js";
 
 export default {
@@ -38,28 +37,14 @@ export default {
     },
     methods: {
         async createPost() {
-            // await PostsService.createPost({ text: this.postText });
-
-            HTTP({
-                url: "/posts/create",
-                method: "POST",
-                data: { text: this.postText },
-                crossdomain: true
-            })
-                .then(res => {
-                    this.postText = "";
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-
-            // this.postText = "";
+            await PostsService.createPost({ text: this.postText });
+            this.postText = "";
         }
     },
 
     sockets: {
         newPost: function(data) {
-            this.$emit("newPost", data);
+            this.$emit("newPost", JSON.parse(data));
         }
     }
 };
