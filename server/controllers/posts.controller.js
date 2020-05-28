@@ -61,7 +61,7 @@ async function getByUser(req, res, next) {
     try {
         const userId = req.params.id;
         const posts = await Post.find({ user: userId }).sort({ created: -1 });
-
+        console.log(posts)
         for (let i = 0; i < posts.length; i++) {
             await posts[i].getDetailedInfo();
         }
