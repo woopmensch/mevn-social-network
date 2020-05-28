@@ -2,11 +2,7 @@
     <div id="app">
         <div v-if="!isMobile" class="uk-container uk-flex uk-flex-center">
             <div class="uk-margin-remove" style="width: 60vw;" uk-grid>
-                <div
-                    v-if="isLoggedIn"
-                    class="uk-flex uk-flex-middle"
-                    style="height: 100vh; width: 200px;"
-                >
+                <div v-if="isLoggedIn" class="uk-flex uk-flex-middle" style="width: 200px;">
                     <Navbar class="uk-position-fixed"></Navbar>
                 </div>
                 <router-view class="uk-width-expand uk-animation-fade"></router-view>
@@ -14,7 +10,7 @@
         </div>
         <div v-if="isMobile">
             <router-view class="uk-animation-fade uk-padding-large" style="margin-bottom: 3rem;"></router-view>
-            <MobileNavbar class="uk-position-bottom"></MobileNavbar>
+            <MobileNavbar v-if="isLoggedIn" class="uk-position-bottom"></MobileNavbar>
         </div>
     </div>
 </template>
@@ -63,9 +59,12 @@ $global-link-hover-color: #42b983;
 .uk-active > a {
     color: $global-primary-background !important;
 }
-
+html,
+body {
+    height: 100%;
+}
 #app {
-    height: 100vh;
+    height: auto;
     width: 100%;
     overflow-y: scroll;
 }
