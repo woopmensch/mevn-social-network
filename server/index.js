@@ -44,8 +44,10 @@ if (process.env.NODE_ENV === 'production') {
     })
 }
 
+
 http.listen(port, function () {
     console.log(`Server listening on port ${port}`);
 });
+
 
 app.use('/api', api);
