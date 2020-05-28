@@ -10,7 +10,7 @@
         </div>
         <div v-if="isMobile">
             <router-view class="uk-animation-fade uk-padding-large" style="margin-bottom: 3rem;"></router-view>
-            <MobileNavbar v-if="isLoggedIn" class="uk-position-bottom"></MobileNavbar>
+            <MobileNavbar v-if="isLoggedIn" class="uk-position-bottom uk-position-fixed"></MobileNavbar>
         </div>
     </div>
 </template>
