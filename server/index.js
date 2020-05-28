@@ -25,7 +25,7 @@ const api = require('./api');
 app.use(errorHandler);
 
 // start server
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.resolve(__dirname, '../client', 'dist')));
