@@ -9,11 +9,13 @@
             v-if="parent.likes.length"
             uk-drop="offset: 5; delay-show: 400; delay-hide: 200;"
         >
-            <div v-for="user in parent.likes" v-bind:key="user._id">
+            <div>
                 <p class="uk-margin-small-bottom">Liked by:</p>
                 <router-link
                     class="uk-icon-button"
                     uk-icon="user"
+                    v-for="user in parent.likes"
+                    :key="user._id"
                     :to="{name: 'profile', params: {userId: parent.user._id}}"
                     :title="user.name"
                 ></router-link>
