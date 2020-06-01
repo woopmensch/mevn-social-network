@@ -9,7 +9,13 @@
                 >
                     <Navbar class="uk-position-fixed"></Navbar>
                 </div>
-                <router-view class="uk-width-expand uk-animation-fade"></router-view>
+                <div v-if="loading" uk-spinner="ratio: 4"></div>
+                <router-view
+                    v-if="!loading"
+                    class="uk-width-expand uk-animation-fade"
+                    @startLoading="startLoading"
+                    @endLoading="endLoading"
+                ></router-view>
             </div>
         </div>
         <div v-if="isMobile">
@@ -33,6 +39,19 @@ export default {
     components: {
         Navbar,
         MobileNavbar
+    },
+    data: function() {
+        return {
+            loading: true
+        };
+    },
+    methods: {
+        startLoading() {
+            this.loading = true;
+        },
+        endLoading() {
+            this.loading = false;
+        }
     },
     computed: {
         ...mapState(["currentUser", "authState"]),

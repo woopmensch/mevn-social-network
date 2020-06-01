@@ -32,7 +32,9 @@ export default {
 
     methods: {
         async getPosts() {
+            this.$emit("startLoading");
             this.posts = await PostsService.fetchPosts();
+            this.$emit("endLoading");
         },
 
         fetchNewPost(data) {
