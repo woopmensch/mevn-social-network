@@ -13,8 +13,8 @@
                 >
                     <Navbar class="uk-position-fixed"></Navbar>
                 </div>
-                <div class="uk-container">
-                    <div v-show="loading" uk-spinner="ratio: 4"></div>
+                <div v-show="loading" class="uk-width-expand uk-flex uk-flex-center uk-flex-middle">
+                    <div uk-spinner="ratio: 4"></div>
                 </div>
                 <router-view
                     v-show="!loading"
