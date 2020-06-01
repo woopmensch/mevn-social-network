@@ -9,9 +9,9 @@
                 >
                     <Navbar class="uk-position-fixed"></Navbar>
                 </div>
-                <div v-if="loading" uk-spinner="ratio: 4"></div>
+                <div v-show="loading" uk-spinner="ratio: 4"></div>
                 <router-view
-                    v-if="!loading"
+                    v-show="!loading"
                     class="uk-width-expand uk-animation-fade"
                     @startLoading="startLoading"
                     @endLoading="endLoading"
@@ -42,7 +42,7 @@ export default {
     },
     data: function() {
         return {
-            loading: true
+            loading: null
         };
     },
     methods: {
