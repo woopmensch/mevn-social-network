@@ -1,7 +1,11 @@
 <template>
     <div id="app">
         <div v-if="!isMobile" class="uk-container uk-flex uk-flex-center">
-            <div class="uk-margin-remove" style="width: 60vw;" uk-grid>
+            <div
+                class="uk-margin-remove uk-width-expand uk-height-expand"
+                style="width: 60vw;"
+                uk-grid
+            >
                 <div
                     v-if="isLoggedIn"
                     class="uk-flex uk-flex-middle"
@@ -42,7 +46,7 @@ export default {
     },
     data: function() {
         return {
-            loading: null
+            loading: false
         };
     },
     methods: {
