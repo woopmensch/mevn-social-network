@@ -13,7 +13,9 @@
                 >
                     <Navbar class="uk-position-fixed"></Navbar>
                 </div>
-                <div v-show="loading" uk-spinner="ratio: 4"></div>
+                <div class="uk-container">
+                    <div v-show="loading" uk-spinner="ratio: 4"></div>
+                </div>
                 <router-view
                     v-show="!loading"
                     class="uk-width-expand uk-animation-fade"
