@@ -1,38 +1,76 @@
 <template>
     <div id="profile">
-        <h1 class="uk-text-primary">Profile</h1>
-        <div class="uk-flex uk-flex-column uk-flex-center uk-flex-middle">
-            <span uk-icon="user" width="100"></span>
-            <span class="uk-card-title">{{user.name}}</span>
-            <span class="uk-text-meta">@{{user._id}}</span>
-            <p>{{user.status}}</p>
+        <h1 class="page__title">Profile</h1>
+        <div class="user-info">
+            <ul class="user-info__list">
+                <li class="user-info__list-item">
+                    <ion-icon name="person-circle-outline" class="user-info__avatar" />
+                </li>
+                <li class="user-info__list-item">
+                    <span class="user-info__name">{{user.name}}</span>
+                </li>
+                <li class="user-info__list-item">
+                    <span class="user-info__id">@{{user._id}}</span>
+                </li>
+                <li class="user-info__list-item">
+                    <span class="user-info__status">{{user.status}}</span>
+                </li>
+            </ul>
         </div>
+
         <CreatePost v-if="isProfilePersonal" @newPost="fetchNewPost"></CreatePost>
-        <ul class="uk-tab">
-            <li ref="userPosts" @click="fetchPostsByUser()">
-                <a>My posts</a>
-            </li>
-            <li ref="likedPosts" @click="fetchLikedPosts()">
-                <a>Liked posts</a>
-            </li>
-        </ul>
-        <div v-if="activeTab === 'userPosts'">
-            <Post
-                class="uk-animation-fade"
-                v-for="post in posts"
-                v-bind:key="post._id"
-                :post="post"
-                :ref="post._id"
-            ></Post>
-        </div>
-        <div v-if="activeTab === 'likedPosts'">
-            <Post
-                class="uk-animation-fade"
-                v-for="post in posts"
-                v-bind:key="post._id"
-                :post="post"
-                :ref="post._id"
-            ></Post>
+
+        <div class="post-tabs">
+            <ul class="post-tabs__list">
+                <li
+                    :class="[activeTab === 'userPosts' ? 'post-tabs__list-item--active' : '']"
+                    class="post-tabs__list-item"
+                >
+                    <button
+                        @click="fetchPostsByUser"
+                        class="btn btn--secondary btn--no-shadow post-tabs__link"
+                    >My posts</button>
+                </li>
+                <li
+                    :class="[activeTab === 'likedPosts' ? 'post-tabs__list-item--active' : '']"
+                    class="post-tabs__list-item"
+                >
+                    <button
+                        @click="fetchLikedPosts"
+                        class="btn btn--secondary btn--no-shadow post-tabs__link"
+                    >Liked posts</button>
+                </li>
+            </ul>
+
+            <Loader v-show="postsLoading" />
+
+            <section
+                v-show="!postsLoading"
+                v-if="activeTab === 'userPosts'"
+                class="post-tabs__content"
+            >
+                <div class="post-tabs__body">
+                    <ul class="post-list">
+                        <li v-for="post in posts" :key="post._id" class="post-list__item">
+                            <Post :post="post" :ref="post._id"></Post>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section
+                v-show="!postsLoading"
+                v-if="activeTab === 'likedPosts'"
+                class="post-tabs__content"
+            >
+                <div class="post-tabs__body">
+                    <ul class="post-list">
+                        <li v-for="post in posts" :key="post._id" class="post-list__item">
+                            <Post :post="post" :ref="post._id"></Post>
+                        </li>
+                    </ul>
+                </div>
+            </section>
         </div>
     </div>
 </template>
@@ -40,16 +78,18 @@
 <script>
 import CreatePost from "../components/CreatePost";
 import Post from "../components/Post";
+import Loader from "../components/Loader";
 import UserService from "../services/UserService";
 import PostsService from "../services/PostsService";
 import { mapState } from "vuex";
 
 export default {
     props: ["userId"],
-    name: "home",
+    name: "Home",
     components: {
         CreatePost,
-        Post
+        Post,
+        Loader
     },
 
     data: function() {
@@ -57,12 +97,14 @@ export default {
             user: {},
             posts: [],
             newPostText: "",
-            activeTab: "userPosts"
+            activeTab: "userPosts",
+            postsLoading: false
         };
     },
 
     computed: {
         ...mapState(["currentUser"]),
+
         isProfilePersonal: function() {
             return this.currentUser._id === this.userId ? true : false;
         }
@@ -70,25 +112,29 @@ export default {
 
     methods: {
         async fetchUserData() {
+            this.$emit("startLoading");
             this.user = await UserService.fetchUserById(this.userId);
+            this.$emit("endLoading");
         },
 
         async fetchPostsByUser() {
+            this.postsLoading = true;
             this.posts = await PostsService.fetchPostsByUser(this.userId);
             this.activeTab = "userPosts";
-            this.$refs.likedPosts.classList.remove("uk-active");
-            this.$refs.userPosts.classList.add("uk-active");
+            this.postsLoading = false;
         },
 
         async fetchLikedPosts() {
+            this.postsLoading = true;
             this.posts = await PostsService.fetchLikedPosts(this.userId);
             this.activeTab = "likedPosts";
-            this.$refs.userPosts.classList.remove("uk-active");
-            this.$refs.likedPosts.classList.add("uk-active");
+            this.postsLoading = false;
         },
 
         fetchNewPost(data) {
-            this.posts.unshift(data);
+            if (this.activeTab !== "likedPosts") {
+                this.posts.unshift(data);
+            }
         }
     },
 
@@ -103,6 +149,7 @@ export default {
             const postIndex = this.posts.indexOf(...post);
             this.posts.splice(postIndex, 1);
         },
+
         togglePostLike: function(data) {
             const post = this.posts.filter(
                 post => post._id === data.targetPost
@@ -110,6 +157,7 @@ export default {
             const postIndex = this.posts.indexOf(...post);
             this.posts[postIndex].likes = data.likes;
         },
+
         // updatePost: function(data) {
         //     const postId = data._id;
         //     const oldPost = this.posts.filter(i => i._id === postId);
@@ -124,6 +172,7 @@ export default {
             Object.assign(post, data.post);
             postComments.push(data.comment);
         },
+
         toggleCommentLike: function(data) {
             const post = this.$refs[data.targetPost];
             const comment = post[0].comments.filter(
@@ -131,6 +180,7 @@ export default {
             );
             comment[0].likes = data.likes;
         },
+
         deleteComment: function(data) {
             const postId = data.targetPost._id;
             const postComponent = this.$refs[postId][0];
@@ -151,3 +201,7 @@ export default {
     }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "../assets/scss/views/profile.scss";
+</style>

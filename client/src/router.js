@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Login from './views/Login.vue';
 import Register from './views/Register.vue';
+// import Settings from './views/Settings.vue';
 import News from './views/News.vue';
 import store from './store';
 
@@ -9,9 +10,10 @@ Vue.use(Router);
 
 const router = new Router({
 	mode: 'history',
+	linkActiveClass: 'nav__link--active',
 	routes: [{
 		path: '/login',
-		name: 'login',
+		name: 'Login',
 		component: Login,
 		meta: {
 			guest: true
@@ -19,7 +21,7 @@ const router = new Router({
 	},
 	{
 		path: '/register',
-		name: 'register',
+		name: 'Register',
 		component: Register,
 		meta: {
 			guest: true
@@ -27,26 +29,15 @@ const router = new Router({
 	},
 	{
 		path: '/',
-		name: 'news',
+		name: 'News',
 		component: News,
 		meta: {
 			requiersAuth: true
 		}
 	},
 	{
-		path: '/:userId',
-		name: 'profile',
-		props: true,
-		component: function () {
-			return import('./views/Profile.vue')
-		},
-		meta: {
-			requiersAuth: true
-		}
-	},
-	{
 		path: '/messages',
-		name: 'messages',
+		name: 'Messages',
 		component: function () {
 			return import('./views/Messages.vue')
 		},
@@ -56,16 +47,27 @@ const router = new Router({
 	},
 	{
 		path: '/settings',
-		name: 'settings',
+		name: 'Settings',
 		component: function () {
 			return import('./views/Settings.vue')
+		},
+		// component: Settings,
+		meta: {
+			requiersAuth: true
+		}
+	},
+	{
+		path: '/:userId',
+		name: 'Profile',
+		props: true,
+		component: function () {
+			return import('./views/Profile.vue')
 		},
 		meta: {
 			requiersAuth: true
 		}
-	}
-	],
-	linkActiveClass: 'uk-active'
+	},
+	]
 })
 
 router.beforeEach(async (to, from, next) => {
@@ -74,7 +76,7 @@ router.beforeEach(async (to, from, next) => {
 		if (!store.state.authState) {
 			localStorage.clear();
 			next({
-				name: "login"
+				name: "Login"
 			});
 		} else {
 			next();
@@ -82,7 +84,7 @@ router.beforeEach(async (to, from, next) => {
 	} else if (to.meta.guest) {
 		if (store.state.authState) {
 			next({
-				name: 'news'
+				name: 'News'
 			})
 		} else {
 			next();

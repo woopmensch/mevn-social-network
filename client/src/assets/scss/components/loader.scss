@@ -1,0 +1,12 @@
+.loader {
+    display: flex;
+    grid-column-start: 2;
+    align-items: center;
+    justify-content: center;
+
+    &__icon {
+        animation: spinner 1.2s linear infinite;
+        color: rgb(147, 147, 147);
+        font-size: 6rem;
+    }
+}

@@ -1,0 +1,93 @@
+@import "../abstract/variables.scss";
+
+.post {
+    font-size: inherit;
+
+    &__btn {
+        display: flex;
+        align-items: center;
+        line-height: 1;
+        font-weight: 300;
+
+        &-amount {
+            margin-left: 3px;
+        }
+    }
+
+    &__header {
+        display: flex;
+        align-items: center;
+        padding: 0 2rem;
+
+        &-info {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+    &__avatar {
+        margin-right: 0.5rem;
+        font-size: 2.5em;
+
+        &-link {
+            display: flex;
+        }
+    }
+    &__author {
+        font-weight: 400;
+    }
+    &__date {
+        color: rgb(147, 147, 147);
+        font-size: 0.8em;
+    }
+
+    &__body {
+        margin: 1rem 0;
+        padding: 0 2rem;
+        word-break: break-all;
+    }
+
+    &__footer {
+        display: flex;
+        padding: 0 2rem;
+    }
+
+    &__comments {
+        padding: 0 2rem;
+    }
+
+    &__divider {
+        margin: 1rem 0;
+        border-top: 1px rgb(230, 236, 240);
+    }
+
+    &__dropdown {
+        margin-left: auto;
+    }
+}
+
+.comment-create {
+    display: flex;
+    box-shadow: none;
+
+    &__avatar {
+        align-self: center;
+        color: $primary-color;
+        font-size: 2.5em;
+    }
+
+    &__text {
+        margin: 0 0.5rem;
+        border: solid 1px rgb(193, 197, 200);
+        border-radius: 1rem;
+        padding: 0.5rem;
+        width: 100%;
+        resize: none;
+        font-family: inherit;
+        font-size: 0.9em;
+        font-weight: 300;
+    }
+
+    &__button {
+        align-self: flex-end;
+    }
+}

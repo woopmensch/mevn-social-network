@@ -9,17 +9,12 @@ import {
 	HTTP
 } from './services/api';
 
-import dayjs from 'dayjs';
-Vue.prototype.$parsedDate = function (d) {
-	if (dayjs(d).year < dayjs().year) {
-		return dayjs(d).format("DD.MMM.YYYY");
-	} else {
-		return dayjs(d).format("DD MMM [at] HH:mm");
-	}
-}
+Vue.config.productionTip = false;
+Vue.config.ignoredElements = ['ion-icons', /^ion-/];
 
 Vue.use(new VueSocketIO({
-	connection: '',
+	// connection: '',
+	connection: 'http://localhost:4000',
 	vuex: {
 		store,
 		actionPrefix: 'SOCKET_',
@@ -27,21 +22,35 @@ Vue.use(new VueSocketIO({
 	},
 }))
 
-
-Vue.config.productionTip = false;
-
 if (localStorage.token) {
 	setAuthToken(localStorage.token)
 } else {
 	setAuthToken(null);
 }
 
-
+/** Axios Request Intercept */
 HTTP.interceptors.request.use(
 	function (config) {
 		return config;
 	},
 	function (err) {
+		return Promise.reject(err);
+	}
+);
+
+/** Axios Response Intercept */
+HTTP.interceptors.response.use(
+	function (response) {
+		return response;
+	},
+	function (err) {
+		if (err.response.status === 401) {
+			localStorage.removeItem('authToken');
+			store.dispatch('toggleAuthState', false);
+			router.push({
+				name: 'Login'
+			});
+		}
 		return Promise.reject(err);
 	}
 );

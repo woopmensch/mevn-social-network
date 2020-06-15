@@ -1,0 +1,9 @@
+.error-list {
+    background-color: rgba(255, 0, 0, 0.1);
+    list-style: none;
+
+    &__item {
+        color: red;
+        margin: 1rem;
+    }
+}

@@ -1,35 +1,22 @@
 <template>
-    <div class="uk-card uk-card-default">
-        <form class="uk-form uk-padding-small" @submit.prevent="createPost">
-            <div class="uk-width-expand uk-flex">
-                <span class="uk-margin-small-right" uk-icon="user" width="40"></span>
-                <textarea
-                    class="uk-textarea"
-                    type="text"
-                    v-model="postText"
-                    placeholder="What's up?"
-                    style="resize: none; overflow: hidden"
-                />
-                <!-- @input="mixin_autoResize_resize" -->
-            </div>
-            <div class="uk-flex uk-flex-right uk-margin-small-top">
-                <button
-                    class="uk-button uk-button-primary"
-                    type="submit"
-                    :disabled="!postText.length"
-                >Post</button>
-            </div>
-        </form>
-    </div>
+    <form class="form" @submit.prevent="createPost">
+        <div class="form__input-group">
+            <textarea
+                class="form__control"
+                type="text"
+                v-model="postText"
+                placeholder="What's up?"
+            />
+        </div>
+        <button class="btn btn--primary" type="submit" :disabled="!postText.length">Post</button>
+    </form>
 </template>
 
 <script>
 import PostsService from "../services/PostsService";
-// import mixinAutoResize from "../utils/autoResize.js";
 
 export default {
-    name: "createPost",
-    // mixins: [mixinAutoResize],
+    name: "CreatePost",
     data: () => {
         return {
             postText: ""
@@ -50,5 +37,6 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+@import "../assets/scss/components/form.scss";
 </style>

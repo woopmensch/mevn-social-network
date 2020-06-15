@@ -1,110 +1,88 @@
 <template>
-    <div class="uk-card uk-card-default uk-margin" v-if="post.user">
-        <div class="uk-flex uk-padding-small uk-padding-remove-bottom">
-            <span uk-icon="user" width="50" />
-            <div class="uk-margin-small-left">
+    <div v-if="post.user" class="post">
+        <div class="post__header">
+            <router-link
+                :to="{name: 'Profile', params: {userId: post.user._id}}"
+                class="post__avatar-link link"
+            >
+                <ion-icon name="person-circle-outline" class="post__avatar"></ion-icon>
+            </router-link>
+
+            <div class="post__header-info">
                 <router-link
-                    class="uk-margin-remove"
-                    style="font-size: 1.5rem;"
-                    :to="{name: 'profile', params: {userId: post.user._id}}"
+                    :to="{name: 'Profile', params: {userId: post.user._id}}"
+                    class="post__author link"
                 >{{post.user.name}}</router-link>
-                <p
-                    class="uk-margin-remove"
-                    style="font-size: 1.2rem;"
-                >{{this.$parsedDate(post.created)}}</p>
+                <span class="post__date">{{parseDate(post.created)}}</span>
             </div>
 
-            <div class="uk-margin-auto-left" v-if="isPostByCurrentUser">
-                <button class="uk-icon-button" uk-icon="more-vertical"></button>
-                <div
-                    class="uk-card uk-card-default uk-width-auto uk-border-rounded"
-                    uk-drop="mode: click; pos: bottom-center; offset: 5"
-                >
-                    <div
-                        class="uk-flex uk-flex-column uk-padding-small uk-padding-remove-left uk-padding-remove-right"
-                    >
-                        <!-- <button
-                            class="uk-icon-button uk-margin-small-bottom"
-                            uk-toggle="target: #modal-edit-post"
-                            uk-icon="pencil"
-                            title="edit"
-                        ></button>-->
-
-                        <!-- <div id="modal-edit-post" uk-modal>
-                            <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
-                                <h2 class="uk-modal-title">Edit post</h2>
-                                <input
-                                    ref="editedText"
-                                    type="text"
-                                    class="uk-input"
-                                    v-model="editedText"
-                                />
-                                <p>{{editedText}}</p>
-                                <button class="uk-button uk-button-primary" @click="editPost">Save</button>
-                                <button class="uk-button uk-button-default uk-modal-close">Cancel</button>
-                            </div>
-                        </div>-->
-
-                        <button
-                            class="uk-icon-button"
-                            @click="deletePost"
-                            uk-icon="trash"
-                            title="delete"
-                        ></button>
-                    </div>
-                </div>
-            </div>
+            <DropDown v-if="postByCurrentUser" class="post__dropdown">
+                <template v-slot:btn-toggle="slotProps">
+                    <button @click="slotProps.toggleDropdown" class="btn">
+                        <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+                    </button>
+                </template>
+                <template v-slot:content>
+                    <button @click="deletePost" class="btn btn--no-shadow">
+                        <ion-icon name="trash-outline"></ion-icon>
+                    </button>
+                </template>
+            </DropDown>
         </div>
 
-        <div class="uk-card-body uk-padding-small">
-            <p class="uk-text-large uk-text-lead" style="font-size: 1.4rem;">{{post.text}}</p>
+        <div class="post__body">
+            <span class="post__text">{{post.text}}</span>
+            <hr class="post__divider" />
         </div>
 
-        <hr class="uk-margin-remove" />
-
-        <div class="uk-flex uk-flex-middle uk-margin-small-left" style="padding: 10px 0;">
-            <Like :post="post"></Like>
-            <div>
-                <button
-                    class="uk-margin-left uk-padding-remove uk-icon-button"
-                    @click.once="loadComments"
-                    @click="showComments = !showComments"
-                    uk-icon="comment"
-                ></button>
+        <div class="post__footer">
+            <button @click="toggleLike" class="btn post__btn">
+                <ion-icon
+                    :name="likedByUser ? 'heart' : 'heart-outline'"
+                    :style="{color: likedByUser ? 'red' : 'inherit'}"
+                    class="post__btn-icon"
+                ></ion-icon>
+                <span v-if="!!post.likes.length" class="post__btn-amount">{{post.likes.length}}</span>
+            </button>
+            <button
+                @click.once="loadComments"
+                @click="showComments = !showComments"
+                class="btn post__btn"
+            >
+                <ion-icon name="chatbox-outline" class="post__btn-icon"></ion-icon>
                 <span
-                    v-if="post.comments.length"
-                    class="uk-padding-small-left"
+                    v-if="!!post.comments.length"
+                    class="post__btn-amount"
                 >{{post.comments.length}}</span>
-            </div>
+            </button>
         </div>
-        <div v-if="showComments">
-            <hr class="uk-margin-remove" />
-            <div class="uk-padding-small uk-padding-remove-top">
-                <Comment
-                    v-for="(comment, index) in comments"
-                    v-bind:key="comment._id"
-                    :comment="comment"
-                    :isLast="index === comments.length - 1"
-                    @deleteComment="deleteComment"
-                ></Comment>
-                <form class="uk-form uk-flex uk-margin-top" @submit.prevent="addComment">
-                    <span class="uk-margin-small-right" uk-icon="user" width="40"></span>
-                    <textarea
-                        class="uk-textarea"
-                        type="text"
-                        v-model="commentText"
-                        placeholder="Leave a comment..."
-                        style="resize: none; overflow: hidden;"
-                    />
-                    <!-- @input="mixin_autoResize_resize" -->
-                    <div class="uk-margin-small-top">
-                        <button
-                            class="uk-button uk-button-small uk-button-primary uk-margin-small-left"
-                            type="submit"
-                            :disabled="!commentText.length"
-                        >comment</button>
-                    </div>
-                </form>
+
+        <hr v-if="showComments" class="post__divider" />
+
+        <div v-if="showComments" class="post__comments">
+            <Loader v-show="commentLoading" />
+
+            <Comment
+                v-show="!commentsLoading"
+                v-for="(comment, index) in comments"
+                @deleteComment="deleteComment"
+                :key="comment._id"
+                :comment="comment"
+                :isLast="index === comments.length - 1"
+            ></Comment>
+
+            <div class="comment-create">
+                <ion-icon name="person-circle-outline" class="comment-create__avatar"></ion-icon>
+                <textarea
+                    v-model="commentText"
+                    placeholder="Leave a comment"
+                    class="comment-create__text"
+                ></textarea>
+                <button
+                    @click="addComment"
+                    :disabled="!commentText.length"
+                    class="btn btn--primary comment-create__button"
+                >Reply</button>
             </div>
         </div>
     </div>
@@ -114,40 +92,56 @@
 import { mapState } from "vuex";
 import PostsService from "../services/PostsService";
 import CommentsService from "../services/CommentsService";
-import Like from "./Like";
 import Comment from "./Comment";
-// import mixinAutoResize from "../utils/autoResize.js";
+import DropDown from "../components/DropDown";
+import Loader from "../components/Loader";
+import { parseDate } from "../utils/parseDate";
 
 export default {
     name: "Post",
-    // mixins: [mixinAutoResize],
     props: ["post"],
     components: {
-        Like,
-        Comment
+        Comment,
+        DropDown,
+        Loader
     },
     data: function() {
         return {
             commentText: "",
             comments: [],
             showComments: false,
+            commentsLoading: false,
             likes: []
         };
     },
 
     computed: {
         ...mapState(["currentUser"]),
-        isPostByCurrentUser: function() {
+        postByCurrentUser() {
             return this.post.user._id === this.currentUser._id;
+        },
+        likedByUser() {
+            return !!this.post.likes.filter(i => i._id === this.currentUser._id)
+                .length;
         }
     },
 
     methods: {
-        loadComments: async function() {
+        async loadComments() {
+            this.commentLoading = true;
             this.comments = await CommentsService.fetchComments(this.post._id);
+            this.commentLoading = false;
         },
 
-        addComment: async function() {
+        deletePost() {
+            PostsService.deletePost(this.post._id);
+        },
+
+        async toggleLike() {
+            await PostsService.likePost(this.post._id);
+        },
+
+        addComment() {
             CommentsService.addComment(this.post._id, {
                 text: this.commentText
             });
@@ -155,14 +149,13 @@ export default {
             this.commentText = "";
         },
 
-        deleteComment: async function(commentId) {
+        deleteComment(commentId) {
             CommentsService.deleteComment(commentId);
         },
 
-        deletePost: async function() {
-            PostsService.deletePost(this.post._id);
+        parseDate(date) {
+            return parseDate(date);
         }
-
         // editPost: async function() {
         //     // console.log(this.$refs.editedText.value)
         //     await PostsService.updatePost(
@@ -173,3 +166,8 @@ export default {
     }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "../assets/scss/components/form.scss";
+@import "../assets/scss/components/post.scss";
+</style>

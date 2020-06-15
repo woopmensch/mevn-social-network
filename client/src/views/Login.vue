@@ -1,38 +1,41 @@
 <template>
-    <div id="login" class="uk-container uk-flex uk-flex-middle uk-flex-column uk-flex-center">
-        <form @submit.prevent="login">
-            <fieldset class="uk-fieldset">
-                <legend class="uk-legend">Login</legend>
-                <div class="uk-margin">
-                    <div class="uk-inline">
-                        <span class="uk-form-icon" uk-icon="icon: mail"></span>
-                        <input class="uk-input" type="text" v-model="email" placeholder="Email" />
-                    </div>
-                </div>
-                <div class="uk-margin">
-                    <div class="uk-inline">
-                        <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                        <input
-                            class="uk-input"
-                            type="password"
-                            v-model="password"
-                            placeholder="Password"
-                        />
-                    </div>
-                </div>
-                <div class="uk-margin uk-flex uk-flex-between">
-                    <button class="uk-button uk-button-primary" type="submit">Login</button>
-                    <router-link
-                        to="/register"
-                        tag="button"
-                        class="uk-button uk-button-secondary"
-                    >Register</router-link>
-                </div>
-            </fieldset>
+    <div id="login" class="authorization">
+        <form @submit.prevent="login" class="form">
+            <span class="form__title lead">Login</span>
+
+            <div class="form__input-group">
+                <ion-icon name="mail-outline" class="form__icon"></ion-icon>
+                <input
+                    v-model="email"
+                    name="email"
+                    type="text"
+                    class="form__control"
+                    placeholder="Email"
+                />
+            </div>
+
+            <div class="form__input-group">
+                <ion-icon name="lock-closed-outline" class="form__icon"></ion-icon>
+                <input
+                    v-model="password"
+                    name="password"
+                    type="password"
+                    class="form__control"
+                    placeholder="Password"
+                />
+            </div>
+
+            <div class="form__actions">
+                <button class="btn btn--primary form__submit">Login</button>
+                <router-link
+                    :to="{name: 'Register'}"
+                    tag="button"
+                    class="btn btn--secondary"
+                >Register</router-link>
+            </div>
         </form>
-        <div v-if="errors.length">
-            <Error v-for="error in errors" v-bind:key="error" :errorMessage="error"></Error>
-        </div>
+
+        <Error v-if="errors.length" :errors="errors" class="error-list__item"></Error>
     </div>
 </template>
 
@@ -43,7 +46,7 @@ import { mapActions } from "vuex";
 import Error from "../components/Error";
 
 export default {
-    name: "login",
+    name: "Login",
     components: {
         Error
     },
@@ -54,6 +57,7 @@ export default {
             errors: []
         };
     },
+
     methods: {
         ...mapActions(["saveUserData", "toggleAuthState"]),
 
@@ -75,7 +79,7 @@ export default {
                     this.$store.dispatch("saveUserData", res.data.user);
                     setAuthToken(res.data.user.token);
 
-                    this.$router.push({ name: "news" });
+                    this.$router.push({ name: "News" });
                 })
                 .catch(error => {
                     this.errors = error.response.data.error;
@@ -89,5 +93,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+@import "../assets/scss/components/form.scss";
+@import "../assets/scss/components/authorization.scss";
 </style>

@@ -1,0 +1,43 @@
+@import "../abstract/variables.scss";
+
+.user-info {
+    &__list {
+        margin: 2rem 0;
+        list-style: none;
+        text-align: center;
+    }
+
+    &__status {
+        display: inline-block;
+        margin-top: 1rem;
+    }
+
+    &__avatar {
+        color: $primary-color;
+        font-size: 4em;
+    }
+
+    &__id {
+        color: rgb(147, 147, 147);
+    }
+}
+
+.post-tabs {
+    margin: 2rem 0;
+
+    &__list {
+        display: flex;
+        list-style: none;
+
+        &-item {
+            &--active {
+                border-bottom: solid 2px $primary-color;
+            }
+        }
+    }
+
+    &__link {
+        display: inline-block;
+        padding: 1rem;
+    }
+}

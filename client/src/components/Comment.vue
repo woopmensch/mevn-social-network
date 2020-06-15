@@ -1,71 +1,91 @@
 <template>
-    <div class="uk-card" style="width: 100%;">
-        <div class="uk-width-expand">
-            <div
-                class="uk-flex uk-padding-small uk-padding-remove-bottom"
-                style="margin-bottom: 0.4em;"
-            >
-                <span uk-icon="user" width="40"></span>
+    <div class="comment">
+        <div class="comment__inner">
+            <div class="comment__avatar">
+                <router-link
+                    :to="{name: 'Profile', params: {userId: comment.user._id}}"
+                    class="link comment__avatar-link"
+                >
+                    <ion-icon name="person-circle-outline" class="comment__avatar-icon"></ion-icon>
+                </router-link>
+            </div>
 
-                <div class="uk-width-expand">
-                    <div class="uk-margin-small-left">
-                        <router-link
-                            class="uk-margin-remove"
-                            :to="{name: 'profile', params: {userId: comment.user._id}}"
-                            style="font-size: 1.3rem;"
-                        >{{comment.user.name}}</router-link>
-                    </div>
+            <div class="comment__info">
+                <router-link
+                    :to="{name: 'Profile', params: {userId: comment.user._id}}"
+                    class="comment__author link"
+                >{{comment.user.name}}</router-link>
+                <span class="comment__text">{{comment.text}}</span>
+                <span class="comment__date">{{parseDate(comment.created)}}</span>
+            </div>
 
-                    <div class="uk-card-body uk-padding-remove uk-margin-small-left">
-                        <p class="uk-text-lead" style="font-size: 1.2rem;">{{comment.text}}</p>
-                    </div>
-
-                    <div class="uk-flex uk-flex-between uk-margin-small-left">
-                        <span class style="font-size: 1.1rem;">{{this.$parsedDate(comment.created)}}</span>
-                    </div>
-                </div>
-                <div class="uk-flex uk-flex-column uk-flex-between">
-                    <div class v-if="isCommentByCurrentUser">
-                        <button class="uk-icon-button" uk-icon="more-vertical"></button>
-                        <div
-                            class="uk-card uk-card-default uk-width-auto uk-border-rounded"
-                            uk-drop="mode: click; pos: bottom-center; offset: 5"
+            <div class="comment__actions">
+                <button @click="toggleLike" class="btn comment__btn">
+                    <ion-icon
+                        :name="likedByUser ? 'heart' : 'heart-outline'"
+                        :style="{color: likedByUser ? 'red' : 'inherit'}"
+                        class="comment__btn-icon"
+                    ></ion-icon>
+                    <span
+                        v-if="!!comment.likes.length"
+                        class="comment__btn-amount"
+                    >{{comment.likes.length}}</span>
+                </button>
+                <DropDown v-if="commentByCurrentUser" class="comment__dropdown">
+                    <template v-slot:btn-toggle="slotProps">
+                        <button @click="slotProps.toggleDropdown" class="btn comment__dropdown-btn">
+                            <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+                        </button>
+                    </template>
+                    <template v-slot:content>
+                        <button
+                            @click="$emit('deleteComment', comment._id)"
+                            class="btn btn--no-shadow comment__dropdown-btn"
                         >
-                            <div
-                                class="uk-flex uk-flex-column uk-padding-small uk-padding-remove-left uk-padding-remove-right"
-                            >
-                                <button
-                                    class="uk-icon-button"
-                                    uk-icon="trash"
-                                    @click="$emit('deleteComment', comment._id)"
-                                    title="delete"
-                                ></button>
-                            </div>
-                        </div>
-                    </div>
-                    <Like :comment="comment"></Like>
-                </div>
+                            <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                    </template>
+                </DropDown>
             </div>
         </div>
-        <hr v-if="!isLast" class="uk-margin-remove" />
+        <hr class="comment__divider" v-if="!isLast" />
     </div>
 </template>
 
 <script>
-import Like from "./Like";
 import { mapState } from "vuex";
+import { parseDate } from "../utils/parseDate";
+import CommentsService from "../services/CommentsService";
+import DropDown from "../components/DropDown";
 
 export default {
     name: "Comment",
     props: ["comment", "isLast"],
     components: {
-        Like
+        DropDown
     },
     computed: {
         ...mapState(["currentUser"]),
-        isCommentByCurrentUser: function() {
+        commentByCurrentUser() {
             return this.comment.user._id === this.currentUser._id;
+        },
+        likedByUser() {
+            return !!this.comment.likes.filter(
+                i => i._id === this.currentUser._id
+            ).length;
+        }
+    },
+    methods: {
+        parseDate(date) {
+            return parseDate(date);
+        },
+        async toggleLike() {
+            await CommentsService.likeComment(this.comment._id);
         }
     }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "../assets/scss/components/comment.scss";
+</style>

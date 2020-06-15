@@ -1,13 +1,16 @@
 <template>
-    <div id="error" class="uk-alert-danger" uk-alert>{{errorMessage}}</div>
+    <ul class="error-list">
+        <li v-for="error in errors" :key="error" class="error-list__item">{{error}}</li>
+    </ul>
 </template>
 
 <script>
 export default {
-    name: "error",
-    props: ["errorMessage"]
+    name: "Error",
+    props: ["errors"]
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+@import "../assets/scss/components/error-list.scss";
 </style>

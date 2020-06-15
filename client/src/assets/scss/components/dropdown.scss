@@ -1,0 +1,17 @@
+@import "../abstract/variables.scss";
+
+.dropdown {
+    position: relative;
+
+    &__content {
+        position: absolute;
+        z-index: 1;
+        margin-top: 1rem;
+        border-radius: 8px;
+        box-shadow: $shadow;
+        background-color: #fff;
+        padding: 1rem 0;
+        width: 100%;
+        text-align: center;
+    }
+}
