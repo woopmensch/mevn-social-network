@@ -8,13 +8,13 @@
             </div>
             <div class="form__input-group">
                 <ion-icon name="lock-closed-outline" class="form__icon"></ion-icon>
-                <input v-model="password" type="text" class="form__control" placeholder="Password" />
+                <input v-model="password" type="password" class="form__control" placeholder="Password" />
             </div>
             <div class="form__input-group">
                 <ion-icon name="lock-closed-outline" class="form__icon"></ion-icon>
                 <input
                     v-model="confirmPassword"
-                    type="text"
+                    type="password"
                     class="form__control"
                     placeholder="Confirm password"
                 />
