@@ -13,8 +13,8 @@ Vue.config.productionTip = false;
 Vue.config.ignoredElements = ['ion-icons', /^ion-/];
 
 Vue.use(new VueSocketIO({
-	// connection: '',
-	connection: 'http://localhost:4000',
+	connection: '',
+	// connection: 'http://localhost:4000',
 	vuex: {
 		store,
 		actionPrefix: 'SOCKET_',
