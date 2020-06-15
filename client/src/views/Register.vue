@@ -4,19 +4,24 @@
             <span class="form__title lead">Register</span>
             <div class="form__input-group">
                 <ion-icon name="mail-outline" class="form__icon"></ion-icon>
-                <input type="text" class="form__control" placeholder="Email" />
+                <input v-model="email" type="text" class="form__control" placeholder="Email" />
             </div>
             <div class="form__input-group">
                 <ion-icon name="lock-closed-outline" class="form__icon"></ion-icon>
-                <input type="text" class="form__control" placeholder="Password" />
+                <input v-model="password" type="text" class="form__control" placeholder="Password" />
             </div>
             <div class="form__input-group">
                 <ion-icon name="lock-closed-outline" class="form__icon"></ion-icon>
-                <input type="text" class="form__control" placeholder="Confirm password" />
+                <input
+                    v-model="confirmPassword"
+                    type="text"
+                    class="form__control"
+                    placeholder="Confirm password"
+                />
             </div>
             <div class="form__input-group">
                 <ion-icon name="person-outline" class="form__icon"></ion-icon>
-                <input type="text" class="form__control" placeholder="Name" />
+                <input v-model="name" type="text" class="form__control" placeholder="Name" />
             </div>
             <div class="form__actions">
                 <button type="submit" class="btn btn--primary form__submit">Register</button>
