@@ -24,8 +24,14 @@
                 />
             </div>
             <div class="form__actions">
-                <button type="submit" class="btn btn--primary form__btn form__submit">Update</button>
-                <button @click="logout" class="btn btn--secondary form__btn">Logout</button>
+                <button type="submit" class="btn btn--primary form__btn form__submit">
+                    <ion-icon name="sync-outline" class="btn__icon"></ion-icon>
+                    <span class="btn__text">Update</span>
+                </button>
+                <button @click="logout" class="btn btn--secondary form__btn">
+                    <ion-icon name="log-out-outline" class="btn__icon"></ion-icon>
+                    <span class="btn__text">Logout</span>
+                </button>
             </div>
         </form>
     </div>

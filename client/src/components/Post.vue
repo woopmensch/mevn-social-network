@@ -82,7 +82,9 @@
                     @click="addComment"
                     :disabled="!commentText.length"
                     class="btn btn--primary comment-create__button"
-                >Reply</button>
+                >
+                    <ion-icon name="send-outline" class="btn__icon"></ion-icon>
+                </button>
             </div>
         </div>
     </div>

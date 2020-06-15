@@ -67,7 +67,6 @@
 
 .comment-create {
     display: flex;
-    box-shadow: none;
 
     &__avatar {
         align-self: center;
@@ -88,6 +87,6 @@
     }
 
     &__button {
-        align-self: flex-end;
+        align-self: center;
     }
 }
