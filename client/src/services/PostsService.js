@@ -1,4 +1,4 @@
-import { HTTP } from './api'
+import { HTTP } from './api';
 
 export default {
     async fetchPosts() {
@@ -27,7 +27,7 @@ export default {
                 crossdomain: true
             })
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
 
         return resp.data;

@@ -37,9 +37,6 @@ import { mapState } from "vuex";
 
 export default {
     name: "Navigation",
-    data: function() {
-        return {};
-    },
     computed: {
         ...mapState(["currentUser"])
     }

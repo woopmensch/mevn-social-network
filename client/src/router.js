@@ -2,7 +2,9 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Login from './views/Login.vue';
 import Register from './views/Register.vue';
-// import Settings from './views/Settings.vue';
+import Settings from './views/Settings.vue';
+import Messages from './views/Messages.vue';
+import Profile from './views/Profile.vue';
 import News from './views/News.vue';
 import store from './store';
 
@@ -38,9 +40,7 @@ const router = new Router({
 	{
 		path: '/messages',
 		name: 'Messages',
-		component: function () {
-			return import('./views/Messages.vue')
-		},
+		component: Messages,
 		meta: {
 			requiersAuth: true
 		}
@@ -48,10 +48,7 @@ const router = new Router({
 	{
 		path: '/settings',
 		name: 'Settings',
-		component: function () {
-			return import('./views/Settings.vue')
-		},
-		// component: Settings,
+		component: Settings,
 		meta: {
 			requiersAuth: true
 		}
@@ -60,9 +57,7 @@ const router = new Router({
 		path: '/:userId',
 		name: 'Profile',
 		props: true,
-		component: function () {
-			return import('./views/Profile.vue')
-		},
+		component: Profile,
 		meta: {
 			requiersAuth: true
 		}

@@ -2,13 +2,13 @@
     <div id="app" class="app">
         <Navbar v-if="loggedIn"></Navbar>
         <main class="main">
+            <Loader v-show="loading" />
             <router-view
                 v-show="!loading"
                 class="page"
                 @startLoading="startLoading"
                 @endLoading="endLoading"
             />
-            <Loader v-show="loading" />
         </main>
     </div>
 </template>

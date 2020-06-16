@@ -14,7 +14,7 @@ export default {
                 crossdomain: true
             })
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
 
         return resp.data;
@@ -31,9 +31,9 @@ export default {
                 data: data
             })
 
-            store.dispatch('saveUserData', resp.data.user)
+            store.dispatch('saveUserData', resp.data.user);
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
 
         return resp.data;
