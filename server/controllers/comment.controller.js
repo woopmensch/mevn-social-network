@@ -10,9 +10,9 @@ auth.required = passport.authenticate('jwt', { session: false });
 
 router.get('/posts/:id/comments', auth.required, fetch)
 router.post('/posts/:id/comments/create', auth.required, create);
-router.get('/comments/:id/like', auth.required, like);
+router.post('/comments/:id/like', auth.required, like);
 router.delete('/comments/:id/delete', auth.required, _delete);
-router.put('/comments/:id/update', auth.required, update);
+// router.put('/comments/:id/update', auth.required, update);
 
 module.exports = router;
 
@@ -106,28 +106,28 @@ async function _delete(req, res, next) {
     }
 }
 
-async function update(req, res, next) {
-    try {
-        const commentId = req.params.id;
-        const comment = await Comment.findById(commentId);
-        const commentParam = req.body;
+// async function update(req, res, next) {
+//     try {
+//         const commentId = req.params.id;
+//         const comment = await Comment.findById(commentId);
+//         const commentParam = req.body;
 
-        if (!comment) {
-            res.send("comment not found");
-        }
+//         if (!comment) {
+//             res.send("comment not found");
+//         }
 
-        if (comment.user != req.user._id) {
-            return res.status(401).json({ msg: 'user not authorized' });
-        }
+//         if (comment.user != req.user._id) {
+//             return res.status(401).json({ msg: 'user not authorized' });
+//         }
 
-        // copy userParam properties to user
-        Object.assign(comment, commentParam);
+//         // copy userParam properties to user
+//         Object.assign(comment, commentParam);
 
-        await comment.save();
+//         await comment.save();
 
-        res.send("comment saved");
+//         res.send("comment saved");
 
-    } catch (error) {
-        res.send(error);
-    }
-}
+//     } catch (error) {
+//         res.send(error);
+//     }
+// }

@@ -97,7 +97,7 @@ export default {
         try {
             await HTTP({
                 url: `/posts/${postId}/like`,
-                method: "GET",
+                method: "POST",
                 crossdomain: true
             })
         } catch (error) {

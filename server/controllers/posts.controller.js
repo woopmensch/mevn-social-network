@@ -11,9 +11,9 @@ router.post('/create', auth.required, create);
 router.get('/', auth.required, getAll);
 router.get('/user/:id', auth.required, getByUser);
 router.get('/user/:id/liked', auth.required, getLiked)
+router.post('/:id/like', auth.required, like);
 router.delete('/:id/delete', auth.required, _delete);
 // router.put('/:id/update', auth.required, _update);
-router.get('/:id/like', auth.required, like);
 
 module.exports = router;
 

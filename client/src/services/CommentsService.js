@@ -47,7 +47,7 @@ export default {
         try {
             await HTTP({
                 url: `/comments/${commentId}/like`,
-                method: "GET",
+                method: "POST",
                 crossdomain: true
             })
         } catch (error) {
