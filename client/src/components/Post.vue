@@ -92,21 +92,23 @@
 
 <script>
 import { mapState } from "vuex";
-import PostsService from "../services/PostsService";
-import CommentsService from "../services/CommentsService";
+import { parseDate } from "../utils/parseDate";
 import Comment from "./Comment";
+import CommentsService from "../services/CommentsService";
 import DropDown from "../components/DropDown";
 import Loader from "../components/Loader";
-import { parseDate } from "../utils/parseDate";
+import PostsService from "../services/PostsService";
 
 export default {
     name: "Post",
-    props: ["post"],
     components: {
         Comment,
         DropDown,
         Loader
     },
+
+    props: ["post"],
+
     data: function() {
         return {
             commentText: "",
@@ -119,9 +121,11 @@ export default {
 
     computed: {
         ...mapState(["currentUser"]),
+
         postByCurrentUser() {
             return this.post.user._id === this.currentUser._id;
         },
+
         likedByUser() {
             return !!this.post.likes.filter(i => i._id === this.currentUser._id)
                 .length;

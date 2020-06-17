@@ -40,16 +40,17 @@
 </template>
 
 <script>
-import { HTTP } from "../services/api";
-import setAuthToken from "../utils/authToken";
 import { mapActions } from "vuex";
+import { HTTP } from "../services/api";
 import Error from "../components/Error";
+import setAuthToken from "../utils/authToken";
 
 export default {
     name: "Login",
     components: {
         Error
     },
+
     data: () => {
         return {
             email: "",

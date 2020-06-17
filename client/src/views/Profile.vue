@@ -76,21 +76,22 @@
 </template>
 
 <script>
-import CreatePost from "../components/CreatePost";
-import Post from "../components/Post";
-import Loader from "../components/Loader";
-import UserService from "../services/UserService";
-import PostsService from "../services/PostsService";
 import { mapState } from "vuex";
+import CreatePost from "../components/CreatePost";
+import Loader from "../components/Loader";
+import Post from "../components/Post";
+import PostsService from "../services/PostsService";
+import UserService from "../services/UserService";
 
 export default {
-    props: ["userId"],
     name: "Home",
     components: {
         CreatePost,
-        Post,
-        Loader
+        Loader,
+        Post
     },
+
+    props: ["userId"],
 
     data: function() {
         return {
@@ -110,11 +111,23 @@ export default {
         }
     },
 
+    watch: {
+        "$route.params.userId": function() {
+            this.fetchUserData();
+            this.fetchPostsByUser();
+        }
+    },
+
+    mounted() {
+        this.fetchUserData();
+        this.fetchPostsByUser();
+    },
+
     methods: {
         async fetchUserData() {
             this.$emit("startLoading");
             this.user = await UserService.fetchUserById(this.userId);
-            this.$emit("endLoading");
+            this.$emit("finishLoading");
         },
 
         async fetchPostsByUser() {
@@ -136,11 +149,6 @@ export default {
                 this.posts.unshift(data);
             }
         }
-    },
-
-    mounted() {
-        this.fetchUserData();
-        this.fetchPostsByUser();
     },
 
     sockets: {
@@ -190,13 +198,6 @@ export default {
             const commentIndex = comments.indexOf(...comment);
             Object.assign(post, data.targetPost);
             comments.splice(commentIndex, 1);
-        }
-    },
-
-    watch: {
-        "$route.params.userId": function() {
-            this.fetchUserData();
-            this.fetchPostsByUser();
         }
     }
 };

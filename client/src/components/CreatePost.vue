@@ -22,6 +22,7 @@ export default {
             postText: ""
         };
     },
+
     methods: {
         async createPost() {
             await PostsService.createPost({ text: this.postText });

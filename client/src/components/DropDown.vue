@@ -15,6 +15,7 @@ export default {
             open: false
         };
     },
+
     methods: {
         listener(event) {
             // close dropdown when clicked outside
@@ -22,10 +23,12 @@ export default {
                 this.close();
             }
         },
+
         toggle() {
             this.open = !this.open;
             window.addEventListener("click", this.listener, false);
         },
+
         close() {
             this.open = false;
             window.removeEventListener("click", this.listener, false);

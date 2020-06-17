@@ -11,9 +11,9 @@
 </template>
 
 <script>
+import CreatePost from "../components/CreatePost";
 import Post from "../components/Post";
 import PostsService from "../services/PostsService";
-import CreatePost from "../components/CreatePost";
 
 export default {
     name: "News",
@@ -28,20 +28,20 @@ export default {
         };
     },
 
+    mounted() {
+        this.getPosts();
+    },
+
     methods: {
         async getPosts() {
             this.$emit("startLoading");
             this.posts = await PostsService.fetchPosts();
-            this.$emit("endLoading");
+            this.$emit("finishLoading");
         },
 
         fetchNewPost(data) {
             this.posts.unshift(data);
         }
-    },
-
-    created() {
-        this.getPosts();
     },
 
     sockets: {

@@ -60,25 +60,30 @@ import DropDown from "../components/DropDown";
 
 export default {
     name: "Comment",
-    props: ["comment", "isLast"],
     components: {
         DropDown
     },
+
+    props: ["comment", "isLast"],
+
     computed: {
         ...mapState(["currentUser"]),
         commentByCurrentUser() {
             return this.comment.user._id === this.currentUser._id;
         },
+
         likedByUser() {
             return !!this.comment.likes.filter(
                 i => i._id === this.currentUser._id
             ).length;
         }
     },
+
     methods: {
         parseDate(date) {
             return parseDate(date);
         },
+
         async toggleLike() {
             await CommentsService.likeComment(this.comment._id);
         }

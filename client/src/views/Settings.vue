@@ -40,6 +40,7 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import UserService from "../services/UserService";
+
 export default {
     name: "Settings",
     data: function() {
@@ -55,6 +56,10 @@ export default {
         _id: state => state.currentUser._id
     }),
 
+    mounted() {
+        this.fetchUserData();
+    },
+
     methods: {
         ...mapActions(["toggleAuthState", "saveUserData"]),
 
@@ -62,7 +67,7 @@ export default {
             this.$emit("startLoading");
             const id = this._id;
             this.user = await UserService.fetchUserById(id);
-            this.$emit("endLoading");
+            this.$emit("finishLoading");
         },
 
         async updateUserInfo() {
@@ -74,10 +79,6 @@ export default {
             this.$store.dispatch("toggleAuthState", false);
             this.$router.push({ name: "Login" });
         }
-    },
-
-    mounted() {
-        this.fetchUserData();
     }
 };
 </script>

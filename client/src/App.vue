@@ -7,27 +7,36 @@
                 v-show="!loading"
                 class="page"
                 @startLoading="startLoading"
-                @endLoading="endLoading"
+                @finishLoading="finishLoading"
             />
         </main>
     </div>
 </template>
 
   <script>
-import Navbar from "./components/Navbar";
-import Loader from "./components/Loader";
 import { mapState } from "vuex";
+import Loader from "./components/Loader";
+import Navbar from "./components/Navbar";
 
 export default {
     name: "App",
     components: {
-        Navbar,
-        Loader
+        Loader,
+        Navbar
     },
+
     data: function() {
         return {
             loading: false
         };
+    },
+
+    computed: {
+        ...mapState(["authState", "currentUser"]),
+
+        loggedIn() {
+            return this.authState;
+        }
     },
 
     methods: {
@@ -35,16 +44,8 @@ export default {
             this.loading = true;
         },
 
-        endLoading() {
+        finishLoading() {
             this.loading = false;
-        }
-    },
-
-    computed: {
-        ...mapState(["currentUser", "authState"]),
-
-        loggedIn() {
-            return this.authState;
         }
     }
 };

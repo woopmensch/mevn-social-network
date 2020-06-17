@@ -40,14 +40,15 @@
 
 <script>
 import { HTTP } from "../services/api";
-import setAuthToken from "../utils/authToken";
 import Error from "../components/Error";
+import setAuthToken from "../utils/authToken";
 
 export default {
     name: "Register",
     components: {
         Error
     },
+
     data: () => {
         return {
             email: "",
