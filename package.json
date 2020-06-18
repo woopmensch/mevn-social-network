@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cd server && npm install && npm start",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "start": "npm install --prefix server && npm start --prefix server",
+    "heroku-postbuild": "npm install --prefix client && npm install --prefix server && npm run build --prefix client"
   },
   "keywords": [],
   "author": "",
