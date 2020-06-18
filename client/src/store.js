@@ -11,6 +11,7 @@ export default new Vuex.Store({
 	state: {
 		authState: false,
 		currentUser: {},
+		isLoading: false
 	},
 	mutations: {
 		ASSIGN_USER_DATA: (state, payload) => {
@@ -22,14 +23,20 @@ export default new Vuex.Store({
 		RESET_STATE: state => {
 			state.authState = false;
 			state.currentUser = {};
+		},
+		SET_LOADING: (state, payload) => {
+			state.isLoading = payload
 		}
 	},
 	actions: {
-		saveUserData: (context, payload) => {
-			context.commit('ASSIGN_USER_DATA', payload);
+		saveUserData: ({ commit }, payload) => {
+			commit('ASSIGN_USER_DATA', payload);
 		},
-		toggleAuthState: (context, payload) => {
-			context.commit('TOGGLE_AUTH_STATE', payload);
+		toggleAuthState: ({ commit }, payload) => {
+			commit('TOGGLE_AUTH_STATE', payload);
+		},
+		setLoading: ({ commit }, payload) => {
+			commit('SET_LOADING', payload)
 		}
 	}
 })

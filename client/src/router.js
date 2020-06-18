@@ -1,11 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Login from './views/Login.vue';
-import Register from './views/Register.vue';
-import Settings from './views/Settings.vue';
-import Messages from './views/Messages.vue';
-import Profile from './views/Profile.vue';
-import News from './views/News.vue';
 import store from './store';
 
 Vue.use(Router);
@@ -16,7 +10,7 @@ const router = new Router({
 	routes: [{
 		path: '/login',
 		name: 'Login',
-		component: Login,
+		component: () => import('./views/Login'),
 		meta: {
 			guest: true
 		}
@@ -24,7 +18,7 @@ const router = new Router({
 	{
 		path: '/register',
 		name: 'Register',
-		component: Register,
+		component: () => import('./views/Register'),
 		meta: {
 			guest: true
 		}
@@ -32,7 +26,7 @@ const router = new Router({
 	{
 		path: '/',
 		name: 'News',
-		component: News,
+		component: () => import('./views/News'),
 		meta: {
 			requiersAuth: true
 		}
@@ -40,7 +34,7 @@ const router = new Router({
 	{
 		path: '/messages',
 		name: 'Messages',
-		component: Messages,
+		component: () => import('./views/Messages'),
 		meta: {
 			requiersAuth: true
 		}
@@ -48,7 +42,7 @@ const router = new Router({
 	{
 		path: '/settings',
 		name: 'Settings',
-		component: Settings,
+		component: () => import('./views/Settings'),
 		meta: {
 			requiersAuth: true
 		}
@@ -57,7 +51,7 @@ const router = new Router({
 		path: '/:userId',
 		name: 'Profile',
 		props: true,
-		component: Profile,
+		component: () => import('./views/Profile'),
 		meta: {
 			requiersAuth: true
 		}

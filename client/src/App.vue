@@ -2,13 +2,8 @@
     <div id="app" class="app">
         <Navbar v-if="loggedIn"></Navbar>
         <main class="main">
-            <Loader v-show="loading" />
-            <router-view
-                v-show="!loading"
-                class="page"
-                @startLoading="startLoading"
-                @finishLoading="finishLoading"
-            />
+            <Loader v-show="isLoading" />
+            <router-view v-show="!isLoading" class="page" />
         </main>
     </div>
 </template>
@@ -25,14 +20,8 @@ export default {
         Navbar
     },
 
-    data: function() {
-        return {
-            loading: false
-        };
-    },
-
     computed: {
-        ...mapState(["authState", "currentUser"]),
+        ...mapState(["authState", "currentUser", "isLoading"]),
 
         loggedIn() {
             return this.authState;

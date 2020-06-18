@@ -45,8 +45,8 @@
             <Loader v-show="postsLoading" />
 
             <section
-                v-show="!postsLoading"
                 v-if="activeTab === 'userPosts'"
+                v-show="!postsLoading"
                 class="post-tabs__content"
             >
                 <div class="post-tabs__body">
@@ -59,8 +59,8 @@
             </section>
 
             <section
-                v-show="!postsLoading"
                 v-if="activeTab === 'likedPosts'"
+                v-show="!postsLoading"
                 class="post-tabs__content"
             >
                 <div class="post-tabs__body">
@@ -125,22 +125,28 @@ export default {
 
     methods: {
         async fetchUserData() {
-            this.$emit("startLoading");
+            this.$store.dispatch("setLoading", true);
+
             this.user = await UserService.fetchUserById(this.userId);
-            this.$emit("finishLoading");
+
+            this.$store.dispatch("setLoading", false);
         },
 
         async fetchPostsByUser() {
             this.postsLoading = true;
+
             this.posts = await PostsService.fetchPostsByUser(this.userId);
             this.activeTab = "userPosts";
+
             this.postsLoading = false;
         },
 
         async fetchLikedPosts() {
             this.postsLoading = true;
+
             this.posts = await PostsService.fetchLikedPosts(this.userId);
             this.activeTab = "likedPosts";
+
             this.postsLoading = false;
         },
 

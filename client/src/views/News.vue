@@ -34,9 +34,11 @@ export default {
 
     methods: {
         async getPosts() {
-            this.$emit("startLoading");
+            this.$store.dispatch("setLoading", true);
+
             this.posts = await PostsService.fetchPosts();
-            this.$emit("finishLoading");
+
+            this.$store.dispatch("setLoading", false);
         },
 
         fetchNewPost(data) {

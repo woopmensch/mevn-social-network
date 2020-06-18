@@ -93,17 +93,15 @@
 <script>
 import { mapState } from "vuex";
 import { parseDate } from "../utils/parseDate";
-import Comment from "./Comment";
 import CommentsService from "../services/CommentsService";
-import DropDown from "../components/DropDown";
 import Loader from "../components/Loader";
 import PostsService from "../services/PostsService";
 
 export default {
     name: "Post",
     components: {
-        Comment,
-        DropDown,
+        Comment: () => import("../components/Comment"),
+        DropDown: () => import("../components/DropDown"),
         Loader
     },
 

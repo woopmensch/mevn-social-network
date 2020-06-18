@@ -64,10 +64,10 @@ export default {
         ...mapActions(["toggleAuthState", "saveUserData"]),
 
         async fetchUserData() {
-            this.$emit("startLoading");
+            this.$store.dispatch("setLoading", true);
             const id = this._id;
             this.user = await UserService.fetchUserById(id);
-            this.$emit("finishLoading");
+            this.$store.dispatch("setLoading", false);
         },
 
         async updateUserInfo() {
